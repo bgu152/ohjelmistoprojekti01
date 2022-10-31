@@ -1,10 +1,10 @@
-package op1.dogclothes;
+package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DogclothesApplicationTests {
+class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
