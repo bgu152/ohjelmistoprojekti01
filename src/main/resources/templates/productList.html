@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        
+        
+        <title>Doggy Clothes</title>
     </head>
     <body>
-        <h1>Vaatteet</h1>
+        <h1 class="text-warning">Vaatteet</h1>
         <div>
-            <table>
-                <thead>
+            <table class="table table-stripped table-hover">
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Nimi</th>
@@ -31,12 +34,12 @@
                         <td>
                             <a
                                 th:href="@{/edit/{id}(id=${product.id})}"
-                                href="#"
+                                href="#" class="btn btn-warning"
                                 >Muokkaa</a
                             >
                         </td>
                         <td>
-                            <a th:href="@{/delete/{id}(id=${product.id})}"
+                            <a th:href="@{/delete/{id}(id=${product.id})}" class="btn btn-danger"
                                 >Poista</a
                             >
                         </td>
@@ -45,6 +48,6 @@
             </table>
         </div>
 
-        <a href="/add">Lisää vaate</a>
+        <a href="/add" class="btn btn-success">Lisää vaate</a>
     </body>
 </html>
