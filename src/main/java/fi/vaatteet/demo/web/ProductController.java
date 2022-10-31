@@ -31,7 +31,6 @@ public class ProductController {
 	//Web pages
     @RequestMapping(value = {"/"})
     public String indexPage(Model model) {
-    	model.addAttribute("products", productRepo.findAll());
         return "index";
     }
     
