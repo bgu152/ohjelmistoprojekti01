@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>O&R Koiravaate</title>
+    </head>
+    <body>
+        <h1>Ompun ja ranen koiravaatekauppa.</h1>
+        <div>
+			<td><a th:href="@{/products}">Vaatelistaus</a></td>
+			<form action="/products">
+			    <input type="submit" value="Vaatelistaus" />
+			</form>
+
+        </div>
+    </body>
+</html>

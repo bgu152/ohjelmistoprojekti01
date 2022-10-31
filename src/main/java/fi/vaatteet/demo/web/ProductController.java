@@ -29,8 +29,14 @@ public class ProductController {
 	private ProductRepo productRepo;
 
 	//Web pages
-	//Web page with list
-    @RequestMapping(value = {"/products", "/"})
+    @RequestMapping(value = {"/"})
+    public String indexPage(Model model) {
+    	model.addAttribute("products", productRepo.findAll());
+        return "index";
+    }
+    
+	//Web page with list of products
+    @RequestMapping(value = {"/products"})
     public String productList(Model model) {
     	model.addAttribute("products", productRepo.findAll());
         return "productList";
