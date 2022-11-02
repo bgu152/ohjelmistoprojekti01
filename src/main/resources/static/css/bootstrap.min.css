@@ -151,7 +151,10 @@ figure{
 }
 img{
     vertical-align:middle;
-    border-style:none
+    border-style:none;
+    height:auto;
+    max-width:20%;
+    padding-bottom: 15px;
 }
 svg{
     overflow:hidden;
@@ -267,7 +270,9 @@ template{
 .h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{
     margin-bottom:.5rem;
     font-weight:500;
-    line-height:1.2
+    line-height:1.2;
+    font-family: 'Poppins', sans-serif;
+    
 }
 .h1,h1{
     font-size:2.5rem
@@ -8158,6 +8163,8 @@ a.text-dark:focus,a.text-dark:hover{
         color:inherit;
         border-color:#dee2e6
     }
+    
+    
 }
 /*# sourceMappingURL=bootstrap.min.css.map */
 

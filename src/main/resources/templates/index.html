@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>O&R Koiravaate</title>
+        <title>O ja R Koiravaate</title>
     </head>
     <body>
-        <h1>Ompun ja ranen koiravaatekauppa.</h1>
+        <h1>Ompun ja Ranen koiravaatekauppa.</h1>
+        <img src="https://images.pexels.com/photos/12500520/pexels-photo-12500520.jpeg?auto=compress&cs=tinysrgb&w=600" class="rounded float"  alt="Responsive image">
         <div>
-			<td><a th:href="@{/products}">Vaatelistaus</a></td>
-			<form action="/products">
-			    <input type="submit" value="Vaatelistaus" />
-			</form>
-
+			<a href="/products" class="btn btn-success">Vaatelistaus</a>
+			
         </div>
     </body>
 </html>
