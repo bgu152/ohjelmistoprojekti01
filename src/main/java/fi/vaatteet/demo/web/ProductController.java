@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -82,6 +83,17 @@ public class ProductController {
     	model.addAttribute("title", title1);
         return "addProduct";
     }  	
+    
+    
+    //error
+    @Controller
+    public class Error implements ErrorController {
+    	@RequestMapping("/error")
+    	public String handleError() {
+    		return "error";
+    	}
+    	
+    }
     
     //Restful services below
     

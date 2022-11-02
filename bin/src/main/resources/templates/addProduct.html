@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaatteen lisäysivusto</title>
+</head>
+<body>
+    <h1 th:text="${title}"></h1>
+    <form th:object="${product}" th:action="@{/save}" action="#" method="post">
+    	<label for="id"></label><input type="hidden" id="id" th:field="*{id}" readonly="readonly" />
+		 
+        <label for="name">Anna vaatteen nimi: </label><input type="text" id="name" th:field="*{name}" />
+
+		<div style="clear: both; display: block; height: 10px;"></div>
+        <label for="type">Anna vaatteen tyyppi: </label><input type="text" id="type" th:field="*{type}" />
+
+		<div style="clear: both; display: block; height: 10px;"></div>
+        <label for="price">Anna vaatteen hinta: </label><input type="text" id="price" th:field="*{price}" />
+
+		<div style="clear: both; display: block; height: 10px;"></div>
+        <label for="manufacturer">Anna valmistajan nimi: </label><input type="text" id="manufacturer" th:field="*{manufacturer}" />
+
+		<div style="clear: both; display: block; height: 10px;"></div>
+        <input type="submit" value="Tallenna" />
+    </form>
+</body>
+</html>

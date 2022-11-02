@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+	
+	<head>
+		<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Nyt sattui virhe!</title>
+		
+	</head>
+	
+	<body>
+		<h1>Hups! Ollaan pihalla.</h1>
+		<h2>404</h2>
+		
+		<a href="/">Kotiin siitä</a>
+		
+		<img class="img" id="oops" alt="character" src="../static/images/404.jpg"
+			th:src="@{images/404.jpg}"
+			height="600" style="float:right"
+		>
+	</body>
+</html>
