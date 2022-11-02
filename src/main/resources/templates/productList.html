@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         
-        <title>Doggy Clothes</title>
+        <title>O ja R vaatelistaus</title>
     </head>
     <body>
-        <h1 class="text-warning">Vaatteet</h1>
-        <div>
+        <h1>Vaatteet</h1>
+        <div class="container shadow-4 rounded-5 overflow-hidden mb-0" >
             <table class="table table-stripped table-hover">
                 <thead class="thead-dark">
                     <tr>
@@ -25,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="product: ${products}">
+                    <tr th:each="product: ${products}" class="table table-bordered">
                         <td th:text="${product.id}"></td>
                         <td th:text="${product.name}"></td>
                         <td th:text="${product.type}"></td>
@@ -46,7 +49,8 @@
                 </tbody>
             </table>
         </div>
-
-        <a href="/add" class="btn btn-success">Lisää vaate</a>
+		<div class="container">
+        	<a href="/add" class="btn btn-success">Lisää vaate</a>
+        </div>
     </body>
 </html>
