@@ -82,7 +82,7 @@ public class ProductController {
     	model.addAttribute("product", product);
     	model.addAttribute("title", title1);
         return "addProduct";
-    }  	
+    }
     
     
     //error
