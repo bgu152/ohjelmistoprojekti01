@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,14 +26,24 @@ public class ManufacturerController {
 	private ManufacturerRepo manufacturerRepo;
 	
 	//Rest
+	
+	@PostMapping("api/manufacturer")
+	public ResponseEntity<Manufacturer> postManufacturer(@RequestBody Manufacturer manufacturer){
+		try {
+			return ResponseEntity.status(203).body(manufacturerRepo.save(manufacturer));
+		}catch(Exception e) {
+			return ResponseEntity.status(400).build();
+		}
+	}
+	
+	
 	@GetMapping("api/manufacturer")
 	public ResponseEntity<List<Manufacturer>> getAllManufacturers(){
 		try {
 			List<Manufacturer> manufacturers = (java.util.List<Manufacturer>) manufacturerRepo.findAll();
 			return ResponseEntity.ok().body(manufacturers);			
 		}catch(Exception e) {
-			return ResponseEntity.status(500).build();
-			
+			return ResponseEntity.status(500).build();			
 		}		
 	}
 	
@@ -63,12 +74,16 @@ public class ManufacturerController {
 	@PutMapping("api/manufacturer/{id}")
 	public ResponseEntity<Manufacturer> updateManufacturer(@RequestBody Manufacturer manufacturerUpdated, @PathVariable Long id){
 		Optional<Manufacturer> manufacturerFromDb = manufacturerRepo.findById(id);
-		if(manufacturerFromDb.isEmpty()) {
+		try {
+
+			if(manufacturerFromDb.isEmpty()) {
+				return ResponseEntity.status(400).build();
+			}			
+			manufacturerUpdated.setId(id);
+			return ResponseEntity.ok().body(manufacturerUpdated);	
+		}catch(Exception e) {		
 			return ResponseEntity.status(400).build();
 		}
-		
-		manufacturerUpdated.setId(id);
-		return ResponseEntity.ok().body(manufacturerUpdated);
 	}
 
 }

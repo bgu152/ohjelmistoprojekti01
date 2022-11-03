@@ -97,19 +97,19 @@ public class ProductController {
     
     //Restful services below
     
-    @RequestMapping("/product")
+    @RequestMapping("api/product")
     public @ResponseBody List<Product> getAllProducts() { 
     	List<Product> productlist = (List<Product>) productRepo.findAll();    	
 		return productlist;   	
     }
     
-    @RequestMapping("/product/{id}")
+    @RequestMapping("api/product/{id}")
     public @ResponseBody Optional<Product> getProduct(@PathVariable Long id) {
     	Optional<Product> product = productRepo.findById(id);
     	return product;
     }
     
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("api/product/{id}")
     public ResponseEntity<Optional<Product>> deleteProduct(@PathVariable Long id){
     	Optional<Product> product = productRepo.findById(id);
     	if(product.isEmpty()) {
@@ -119,7 +119,7 @@ public class ProductController {
     	return ResponseEntity.ok().body(product);
     }
     
-    @PutMapping("/product/{id}")
+    @PutMapping("api/product/{id}")
     public @ResponseBody ResponseEntity<Product> updateProduct(@RequestBody Product productUpdated, @PathVariable Long id) {
     	Optional<Product> productFromDb = productRepo.findById(id); 
     	if(productFromDb.isEmpty()) {
@@ -130,7 +130,7 @@ public class ProductController {
     	return ResponseEntity.ok().body(productRepo.save(productUpdated));
     }
     
-    @PostMapping("/product/")
+    @PostMapping("api/product/")
     public @ResponseBody  ResponseEntity<Product> addProduct(@RequestBody Product product){
     	return ResponseEntity.ok().body(productRepo.save(product));    	
     }    
