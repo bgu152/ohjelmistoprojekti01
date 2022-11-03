@@ -18,8 +18,6 @@ import fi.vaatteet.demo.domain.Manufacturer;
 import java.util.Optional;
 import java.util.List;
 
-
-
 @Controller
 public class ManufacturerController {
 	@Autowired

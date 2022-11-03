@@ -26,11 +26,9 @@ public class Manufacturer {
 	}
 	public Manufacturer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public Manufacturer(Long id, String name) {
+	public Manufacturer(String name) {
 		super();
-		this.id = id;
 		this.name = name;
 	}
 	@Override

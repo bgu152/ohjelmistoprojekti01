@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Product {
@@ -13,7 +15,10 @@ public class Product {
     private String name;
     private String type;
     private Float price;
-    private String manufacturer;
+    
+    @ManyToOne
+    @JoinColumn(name="manufacturer_id")
+    private Manufacturer manufacturer;
     
 	public Product() {
 	}
@@ -52,15 +57,15 @@ public class Product {
 		this.price = price;
 	}
 
-	public String getManufacturer() {
+	public Manufacturer getManufacturer() {
 		return manufacturer;
 	}
 
-	public void setManufacturer(String manufacturer) {
+	public void setManufacturer(Manufacturer manufacturer) {
 		this.manufacturer = manufacturer;
 	}
 
-	public Product(String name, String type, Float price, String manufacturer) {
+	public Product(String name, String type, Float price, Manufacturer manufacturer) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -71,9 +76,8 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", type=" + type + ", price=" + price + ", manufacturer="
-				+ manufacturer + "]";
+				+ manufacturer.getName() + "]";
 	}
-	
     
 	
     
