@@ -17,7 +17,7 @@
         <label for="type">Anna vaatteen tyyppi: </label><input type="text" id="type" th:field="*{type}" />
 
 		<div style="clear: both; display: block; height: 10px;"></div>
-        <label for="price">Anna vaatteen hinta: </label><input type="text" id="price" th:field="*{price}" />
+        <label for="price">Anna vaatteen hinta: </label><input type="text" id="price" th:field="*{price}" th:required="required" />
 
 		<div style="clear: both; display: block; height: 10px;"></div>
         <label for="manufacturer">Anna valmistajan nimi: </label><input type="text" id="manufacturer" th:field="*{manufacturer}" />
