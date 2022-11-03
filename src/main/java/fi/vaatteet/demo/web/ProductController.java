@@ -23,11 +23,18 @@ import fi.vaatteet.demo.domain.ProductRepo;
 
 import org.springframework.http.ResponseEntity;
 
+import fi.vaatteet.demo.domain.ManufacturerRepo;
+
+import fi.vaatteet.demo.domain.Manufacturer;
+
+
 
 @Controller
 public class ProductController {
 	@Autowired
 	private ProductRepo productRepo;
+	@Autowired
+	private ManufacturerRepo manufacturerRepo;
 
 	//Web pages
     @RequestMapping(value = {"/"})
@@ -53,10 +60,12 @@ public class ProductController {
     @RequestMapping(value = "/add")
     public String addProduct(Model model){
    		String title2 = "Lisää vaate";
+   		List<Manufacturer> manufacturers = (List<Manufacturer>) manufacturerRepo.findAll();
    		model.addAttribute("title", title2);
     	model.addAttribute("product", new Product());
+    	model.addAttribute("manufacturers", manufacturers);
         return "addProduct";
-    }    
+    }
         
     // Save new product in webpage
        @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -78,6 +87,8 @@ public class ProductController {
     	if(product.isEmpty()) {
             return "redirect:../products";	
     	}    	
+   		List<Manufacturer> manufacturers = (List<Manufacturer>) manufacturerRepo.findAll();
+    	model.addAttribute("manufacturers", manufacturers);
     	String title1 = "Muokkaa vaatetta";
     	model.addAttribute("product", product);
     	model.addAttribute("title", title1);

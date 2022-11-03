@@ -28,7 +28,7 @@ private static final Logger log = LoggerFactory.getLogger(DemoApplication.class)
 
 				log.info("save a couple of manufacturers");
 				Manufacturer mnm = manufacturerRepo.save(new Manufacturer("M&M"));
-				Manufacturer leikki = manufacturerRepo.save(new Manufacturer("leikki"));
+				Manufacturer leikki = manufacturerRepo.save(new Manufacturer("Leikki"));
 								
 				log.info("save a couple of products");
 				productRepo.save(new Product("JoustavaMeno", "haalari",  (float) 59, mnm));

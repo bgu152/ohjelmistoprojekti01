@@ -33,7 +33,7 @@
                         <td th:text="${product.name}"></td>
                         <td th:text="${product.type}"></td>
                         <td th:text="${product.price}"></td>
-                        <td th:text="${product.manufacturer}"></td>
+                        <td th:text="${product.manufacturer.name}"></td>
                         <td>
                             <a
                                 th:href="@{/edit/{id}(id=${product.id})}" class="btn btn-warning"
