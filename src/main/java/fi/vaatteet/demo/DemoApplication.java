@@ -27,6 +27,7 @@ private static final Logger log = LoggerFactory.getLogger(DemoApplication.class)
 			return (args) -> {
 
 				log.info("save a couple of manufacturers");
+				Manufacturer noManufacturer = manufacturerRepo.save(new Manufacturer(" "));
 				Manufacturer mnm = manufacturerRepo.save(new Manufacturer("M&M"));
 				Manufacturer leikki = manufacturerRepo.save(new Manufacturer("Leikki"));
 								
