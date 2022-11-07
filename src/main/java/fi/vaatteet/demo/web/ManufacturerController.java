@@ -25,7 +25,7 @@ public class ManufacturerController {
 	
 	//Rest
 	
-	@PostMapping("api/manufacturer")
+	@PostMapping("api/manufacturers")
 	public ResponseEntity<Manufacturer> postManufacturer(@RequestBody Manufacturer manufacturer){
 		try {
 			return ResponseEntity.status(203).body(manufacturerRepo.save(manufacturer));
@@ -35,7 +35,7 @@ public class ManufacturerController {
 	}
 	
 	
-	@GetMapping("api/manufacturer")
+	@GetMapping("api/manufacturers")
 	public ResponseEntity<List<Manufacturer>> getAllManufacturers(){
 		try {
 			List<Manufacturer> manufacturers = (java.util.List<Manufacturer>) manufacturerRepo.findAll();
@@ -45,7 +45,7 @@ public class ManufacturerController {
 		}		
 	}
 	
-	@GetMapping("api/manufacturer/{id}")
+	@GetMapping("api/manufacturers/{id}")
 	public ResponseEntity<Optional<Manufacturer>> getManufacturer(@PathVariable Long id){
 		try {
 			Optional<Manufacturer> manufacturer = manufacturerRepo.findById(id);
@@ -55,7 +55,7 @@ public class ManufacturerController {
 		}		
 	}
 	
-	@DeleteMapping("api/manufacturer/{id}")
+	@DeleteMapping("api/manufacturers/{id}")
 	public ResponseEntity<Optional<Manufacturer>> deleteManufacturer(@PathVariable Long id){
 		try {
 			Optional<Manufacturer> manufacturer =  manufacturerRepo.findById(id);
@@ -69,7 +69,7 @@ public class ManufacturerController {
 		}	
 	}
 	
-	@PutMapping("api/manufacturer/{id}")
+	@PutMapping("api/manufacturers/{id}")
 	public ResponseEntity<Manufacturer> updateManufacturer(@RequestBody Manufacturer manufacturerUpdated, @PathVariable Long id){
 		Optional<Manufacturer> manufacturerFromDb = manufacturerRepo.findById(id);
 		try {

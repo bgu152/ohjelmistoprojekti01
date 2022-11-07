@@ -108,19 +108,19 @@ public class ProductController {
     
     //Restful services below
     
-    @RequestMapping("api/product")
+    @RequestMapping("api/products")
     public @ResponseBody List<Product> getAllProducts() { 
     	List<Product> productlist = (List<Product>) productRepo.findAll();    	
 		return productlist;   	
     }
     
-    @RequestMapping("api/product/{id}")
+    @RequestMapping("api/products/{id}")
     public @ResponseBody Optional<Product> getProduct(@PathVariable Long id) {
     	Optional<Product> product = productRepo.findById(id);
     	return product;
     }
     
-    @DeleteMapping("api/product/{id}")
+    @DeleteMapping("api/products/{id}")
     public ResponseEntity<Optional<Product>> deleteProduct(@PathVariable Long id){
     	Optional<Product> product = productRepo.findById(id);
     	if(product.isEmpty()) {
@@ -130,7 +130,7 @@ public class ProductController {
     	return ResponseEntity.ok().body(product);
     }
     
-    @PutMapping("api/product/{id}")
+    @PutMapping("api/products/{id}")
     public @ResponseBody ResponseEntity<Product> updateProduct(@RequestBody Product productUpdated, @PathVariable Long id) {
     	Optional<Product> productFromDb = productRepo.findById(id); 
     	if(productFromDb.isEmpty()) {
@@ -141,8 +141,16 @@ public class ProductController {
     	return ResponseEntity.ok().body(productRepo.save(productUpdated));
     }
     
-    @PostMapping("api/product/")
+    @PostMapping("api/products/")
     public @ResponseBody  ResponseEntity<Product> addProduct(@RequestBody Product product){
+    	
+    	Optional<Manufacturer> manufacturer = manufacturerRepo.findById((product.getManufacturer().getId()));
+    	
+    	if(manufacturer.isEmpty()) {
+    		String message = "Could not find manufacturer";
+    		return ResponseEntity.status(400).body(null);
+    	}
+    	
     	return ResponseEntity.ok().body(productRepo.save(product));    	
     }    
 }
