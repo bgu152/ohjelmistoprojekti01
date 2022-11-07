@@ -143,6 +143,15 @@ public class ProductController {
     
     @PostMapping("api/product/")
     public @ResponseBody  ResponseEntity<Product> addProduct(@RequestBody Product product){
+    	System.out.println(product.getManufacturer().getId());
+    	
+    	Optional<Manufacturer> manufacturer = manufacturerRepo.findById((product.getManufacturer().getId()));
+    	
+    	if(manufacturer.isEmpty()) {
+    		String message = "Could not find manufacturer";
+    		return ResponseEntity.status(400).body(null);
+    	}
+    	
     	return ResponseEntity.ok().body(productRepo.save(product));    	
     }    
 }
