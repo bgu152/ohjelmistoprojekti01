@@ -1,6 +1,5 @@
 package fi.vaatteet.demo.web;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +26,6 @@ import fi.vaatteet.demo.domain.ManufacturerRepo;
 
 import fi.vaatteet.demo.domain.Manufacturer;
 
-
-
 @Controller
 public class ProductController {
 	@Autowired
@@ -36,121 +33,160 @@ public class ProductController {
 	@Autowired
 	private ManufacturerRepo manufacturerRepo;
 
-	//Web pages
-    @RequestMapping(value = {"/"})
-    public String indexPage(Model model) {
-        return "index";
-    }
-    
-	//Web page with list of products
-    @RequestMapping(value = {"/products"})
-    public String productList(Model model) {
-    	model.addAttribute("products", productRepo.findAll());
-        return "productList";
-    }
-    
+	// Web pages
+	@RequestMapping(value = { "/" })
+	public String indexPage(Model model) {
+		return "index";
+	}
+
+	// Web page with list of products
+	@RequestMapping(value = { "/products" })
+	public String productList(Model model) {
+		model.addAttribute("products", productRepo.findAll());
+		return "productList";
+	}
+
 //  Delete in webpage
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteProduct(@PathVariable("id") Long id, Model model) {
-    	productRepo.deleteById(id);
-        return "redirect:../products";	
-    }     
-    
-    // Add new product
-    @RequestMapping(value = "/add")
-    public String addProduct(Model model){
-   		String title2 = "Lisää vaate";
-   		List<Manufacturer> manufacturers = (List<Manufacturer>) manufacturerRepo.findAll();
-   		model.addAttribute("title", title2);
-    	model.addAttribute("product", new Product());
-    	model.addAttribute("manufacturers", manufacturers);
-        return "addProduct";
-    }
-        
-    // Save new product in webpage
-       @RequestMapping(value = "/save", method = RequestMethod.POST)
-       public String save(Product product){
-       	try {
-       		System.out.println(product.toString());
-               productRepo.save(product);}
-       	catch(Exception e) {
-       		  System.out.println(e.toString());
-       		}
-           return "redirect:products";
-       } 
-       
-    
-    // Update new product
-    @RequestMapping(value = "/edit/{id}")
-    public String updateProduct(@PathVariable("id") Long id, Model model, @RequestParam(value="title", required=false) String title){
-    	Optional<Product> product = productRepo.findById(id);
-    	if(product.isEmpty()) {
-            return "redirect:../products";	
-    	}    	
-   		List<Manufacturer> manufacturers = (List<Manufacturer>) manufacturerRepo.findAll();
-    	model.addAttribute("manufacturers", manufacturers);
-    	String title1 = "Muokkaa vaatetta";
-    	model.addAttribute("product", product);
-    	model.addAttribute("title", title1);
-        return "addProduct";
-    }
-    
-    
-    //error
-    @Controller
-    public class Error implements ErrorController {
-    	@RequestMapping("/error")
-    	public String handleError() {
-    		return "error";
-    	}
-    	
-    }
-    
-    //Restful services below
-    
-    @RequestMapping("api/products")
-    public @ResponseBody List<Product> getAllProducts() { 
-    	List<Product> productlist = (List<Product>) productRepo.findAll();    	
-		return productlist;   	
-    }
-    
-    @RequestMapping("api/products/{id}")
-    public @ResponseBody Optional<Product> getProduct(@PathVariable Long id) {
-    	Optional<Product> product = productRepo.findById(id);
-    	return product;
-    }
-    
-    @DeleteMapping("api/products/{id}")
-    public ResponseEntity<Optional<Product>> deleteProduct(@PathVariable Long id){
-    	Optional<Product> product = productRepo.findById(id);
-    	if(product.isEmpty()) {
-    		return ResponseEntity.status(400).build();
-    	}
-    	productRepo.deleteById(id);
-    	return ResponseEntity.ok().body(product);
-    }
-    
-    @PutMapping("api/products/{id}")
-    public @ResponseBody ResponseEntity<Product> updateProduct(@RequestBody Product productUpdated, @PathVariable Long id) {
-    	Optional<Product> productFromDb = productRepo.findById(id); 
-    	if(productFromDb.isEmpty()) {
-    		return ResponseEntity.status(400).body(null);
-    	}
-    	productUpdated.setId(id);
-    	System.out.println(productUpdated);
-    	return ResponseEntity.ok().body(productRepo.save(productUpdated));
-    }
-    
-    @PostMapping("api/products/")
-    public @ResponseBody  ResponseEntity<Product> addProduct(@RequestBody Product product){
-    	
-    	Optional<Manufacturer> manufacturer = manufacturerRepo.findById((product.getManufacturer().getId()));
-    	
-    	if(manufacturer.isEmpty()) {
-    		String message = "Could not find manufacturer";
-    		return ResponseEntity.status(400).body(null);
-    	}
-    	
-    	return ResponseEntity.ok().body(productRepo.save(product));    	
-    }    
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public String deleteProduct(@PathVariable("id") Long id, Model model) {
+		productRepo.deleteById(id);
+		return "redirect:../products";
+	}
+
+	// Add new product
+	@RequestMapping(value = "/add")
+	public String addProduct(Model model) {
+		String title2 = "Lisää vaate";
+		List<Manufacturer> manufacturers = (List<Manufacturer>) manufacturerRepo.findAll();
+		model.addAttribute("title", title2);
+		model.addAttribute("product", new Product());
+		model.addAttribute("manufacturers", manufacturers);
+		return "addProduct";
+	}
+
+	// Save new product in webpage
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(Product product) {
+		try {
+			System.out.println(product.toString());
+			productRepo.save(product);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return "redirect:products";
+	}
+
+	// Update new product
+	@RequestMapping(value = "/edit/{id}")
+	public String updateProduct(@PathVariable("id") Long id, Model model,
+			@RequestParam(value = "title", required = false) String title) {
+		Optional<Product> product = productRepo.findById(id);
+		if (product.isEmpty()) {
+			return "redirect:../products";
+		}
+		List<Manufacturer> manufacturers = (List<Manufacturer>) manufacturerRepo.findAll();
+		model.addAttribute("manufacturers", manufacturers);
+		String title1 = "Muokkaa vaatetta";
+		model.addAttribute("product", product);
+		model.addAttribute("title", title1);
+		return "addProduct";
+	}
+
+	// error
+	@Controller
+	public class Error implements ErrorController {
+		@RequestMapping("/error")
+		public String handleError() {
+			return "error";
+		}
+
+	}
+
+	// Restful services below
+
+	@RequestMapping("api/products")
+	public ResponseEntity<List<Product>> getAllProducts() {
+		try {
+			List<Product> productlist = (List<Product>) productRepo.findAll();
+			return ResponseEntity.ok().body(productlist);
+		} catch (Exception e) {
+
+			;
+			return ResponseEntity.status(500).build();
+
+		}
+	}
+
+	@RequestMapping("api/products/{id}")
+	public ResponseEntity<Optional<Product>> getProduct(@PathVariable Long id) {
+		try {
+			Optional<Product> product = productRepo.findById(id);
+			return ResponseEntity.ok().body(product);
+		} catch (Exception e) {
+			return ResponseEntity.status(500).build();
+		}
+
+	}
+
+	@DeleteMapping("api/products/{id}")
+	public ResponseEntity<Optional<Product>> deleteProduct(@PathVariable Long id) {
+		try {
+			Optional<Product> product = productRepo.findById(id);
+			if (product.isEmpty()) {
+				return ResponseEntity.status(400).build();
+			}
+			productRepo.deleteById(id);
+			return ResponseEntity.ok().body(product);
+		} catch (Exception e) {
+			return ResponseEntity.status(500).build();
+
+		}
+
+	}
+
+	@PutMapping("api/products/{id}")
+	public ResponseEntity<Product> updateProduct(@RequestBody Product productUpdated, @PathVariable Long id) {
+		
+
+		try {
+
+			Optional<Product> productFromDb = productRepo.findById(id);
+			if (productFromDb.isEmpty()) {
+				System.out.println(productUpdated);
+				return ResponseEntity.status(400).build();
+			}
+
+			Optional<Manufacturer> manufacturer = manufacturerRepo.findById((productUpdated.getManufacturer().getId()));
+			
+			if (manufacturer.isEmpty()) {
+				return ResponseEntity.status(400).build();
+			}
+
+			productUpdated.setId(id);
+			
+			return ResponseEntity.ok().body(productRepo.save(productUpdated));
+
+		} catch (Exception e) {
+			return ResponseEntity.status(500).build();
+
+		}
+	}
+
+	@PostMapping("api/products/")
+	public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+
+		try {
+			Optional<Manufacturer> manufacturer = manufacturerRepo.findById((product.getManufacturer().getId()));
+
+			if (manufacturer.isEmpty()) {
+				return ResponseEntity.status(400).build();
+			}
+
+			return ResponseEntity.ok().body(productRepo.save(product));
+		} catch (Exception e) {
+			return ResponseEntity.status(500).build();
+
+		}
+
+	}
 }

@@ -30,7 +30,7 @@ public class ManufacturerController {
 		try {
 			return ResponseEntity.status(203).body(manufacturerRepo.save(manufacturer));
 		}catch(Exception e) {
-			return ResponseEntity.status(400).build();
+			return ResponseEntity.status(500).build();
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class ManufacturerController {
 			Optional<Manufacturer> manufacturer = manufacturerRepo.findById(id);
 			return ResponseEntity.ok().body(manufacturer);				
 		}catch(Exception e) {
-			return ResponseEntity.status(400).build();
+			return ResponseEntity.status(500).build();
 		}		
 	}
 	
@@ -63,7 +63,7 @@ public class ManufacturerController {
 				return ResponseEntity.ok().build();
 			}
 			manufacturerRepo.deleteById(id);		
-			return ResponseEntity.status(204).build(); 		
+			return ResponseEntity.status(204).body(manufacturer); 		
 		}catch(Exception e) {
 			return ResponseEntity.status(500).build();			
 		}	
@@ -73,14 +73,13 @@ public class ManufacturerController {
 	public ResponseEntity<Manufacturer> updateManufacturer(@RequestBody Manufacturer manufacturerUpdated, @PathVariable Long id){
 		Optional<Manufacturer> manufacturerFromDb = manufacturerRepo.findById(id);
 		try {
-
 			if(manufacturerFromDb.isEmpty()) {
 				return ResponseEntity.status(400).build();
 			}			
 			manufacturerUpdated.setId(id);
 			return ResponseEntity.ok().body(manufacturerUpdated);	
 		}catch(Exception e) {		
-			return ResponseEntity.status(400).build();
+			return ResponseEntity.status(500).build();
 		}
 	}
 
