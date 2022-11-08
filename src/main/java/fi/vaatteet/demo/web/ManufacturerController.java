@@ -1,27 +1,61 @@
 package fi.vaatteet.demo.web;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import fi.vaatteet.demo.domain.ManufacturerRepo;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import fi.vaatteet.demo.domain.Manufacturer;
-
-import java.util.Optional;
-import java.util.List;
+import fi.vaatteet.demo.domain.ManufacturerRepo;
 
 @Controller
 public class ManufacturerController {
 	@Autowired
 	private ManufacturerRepo manufacturerRepo;
+	
+	// Web pages
+	// Web page with list of manufacturers
+	@RequestMapping(value = { "/manufacturers" }, method = RequestMethod.GET)
+	public String manufacturerList(Model model) {
+		model.addAttribute("manufacturers", manufacturerRepo.findAll());
+		return "manufacturerList";
+	}
+	
+	// Delete manufacturer in web page
+	@RequestMapping(value = "/deletemanufacturer/{id}", method = RequestMethod.GET)
+	public String deleteManufacturer(@PathVariable("id") Long id, Model model) {
+		manufacturerRepo.deleteById(id);
+		return "redirect:../manufacturers";
+	}
+	
+	// Add new manufacturer
+	@RequestMapping(value = "/addmanufacturer")
+	public String addManufacturer(Model model) {
+		model.addAttribute("manufacturer", new Manufacturer());
+		return "addManufacturer";
+	}
+	
+	// Save new manufacturer
+	@RequestMapping(value = "/savemanufacturer", method = RequestMethod.POST)
+	public String saveManufacturer(Manufacturer manufacturer) {
+		try {
+			manufacturerRepo.save(manufacturer);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return "redirect:/manufacturers";
+	}
 	
 	//Rest
 	
@@ -78,7 +112,7 @@ public class ManufacturerController {
 			}			
 			manufacturerUpdated.setId(id);
 			return ResponseEntity.ok().body(manufacturerUpdated);	
-		}catch(Exception e) {		
+		}catch(Exception e) {
 			return ResponseEntity.status(500).build();
 		}
 	}

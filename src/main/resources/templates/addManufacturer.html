@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaatteen lisäysivusto</title>
+    
+    <script th:inline="javascript">
+/*<![CDATA[*/
+
+    var manufacturers = /*[[${manufacturers}]]*/ 'default';
+    console.log(manufacturers);
+
+/*]]>*/
+</script>
+    	
+</head>
+<body>
+    <h1>Lisää valmistaja</h1>
+    <form th:object="${manufacturer}" th:action="@{/savemanufacturer}" action="#" method="post">
+        <label for="name">Anna valmistajan nimi: </label><input type="text" id="name" th:field="*{name}" />
+		<div style="clear: both; display: block; height: 10px;"></div>
+        <input type="submit" value="Tallenna" />
+    </form>
+</body>
+</html>
