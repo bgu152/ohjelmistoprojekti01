@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import fi.vaatteet.demo.domain.Product;
 import fi.vaatteet.demo.domain.ProductRepo;
@@ -43,6 +42,14 @@ public class ProductController {
 	@RequestMapping(value = { "/products" })
 	public String productList(Model model) {
 		model.addAttribute("products", productRepo.findAll());
+		return "productList";
+	}
+	
+	// Show all products by chosen manufacturer
+	@RequestMapping(value = "/products/{manufacturer}", method = RequestMethod.GET)
+	public String getProductsByManufacturer(@PathVariable("manufacturer") String name, Model model) {
+		model.addAttribute("manufacturer", name);
+		model.addAttribute("products", manufacturerRepo.findByName(name).getProducts());
 		return "productList";
 	}
 

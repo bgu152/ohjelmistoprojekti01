@@ -13,7 +13,7 @@
         <title>O ja R vaatelistaus</title>
     </head>
     <body>
-        <h1>Vaatteet</h1>
+        <h1 th:text="${manufacturer} ? 'Vaatteet valmistajalta ' + ${manufacturer} : 'Vaatteet'"></h1>
         <div class="container shadow-4 rounded-5 overflow-hidden mb-0" >
             <table class="table table-stripped table-hover">
                 <thead class="thead-dark">
@@ -28,12 +28,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="product: ${products}" class="table table-bordered">
-                        <td th:text="${product.id}"></td>
-                        <td th:text="${product.name}"></td>
-                        <td th:text="${product.type}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td th:text="${product.manufacturer.name}"></td>
+                    <tr th:each="product: ${products}"  th:object="${product}" class="table table-bordered">
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{name}"></td>
+                        <td th:text="*{type}"></td>
+                        <td th:text="*{price}"></td>
+                        <td><a style="text-decoration:none; color:inherit"
+                        	th:text="*{manufacturer.name}"
+                        	th:href="@{/products/{manufacturer}(manufacturer=*{manufacturer.name})}">
+                        </a></td>
                         <td>
                             <a
                                 th:href="@{/edit/{id}(id=${product.id})}" class="btn btn-warning"
@@ -52,6 +55,7 @@
 		<div class="container">
         	<a href="/add" class="btn btn-success">Lisää vaate</a>
         	<a href="/addmanufacturer" class="btn btn-success">Lisää valmistaja</a>
+        	<a href="/manufacturers" class="btn btn-info">Valmistajat</a>
         </div>
     </body>
 </html>
