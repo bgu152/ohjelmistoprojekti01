@@ -1,1 +1,40 @@
-testi
+<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+	
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Valmistajalista</title>
+	</head>
+	
+	<body>
+		<h1>Valmistajat</h1>
+		
+		<div class="container shadow-4 rounded-5 overflow-hidden mb-0">
+			<table class="table table-stripped table-hover">
+				<thead class="thead-dark">
+					<tr>
+						<th>ID</th>
+						<th>Nimi</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="manufacturer: ${manufacturers}" th:object="${manufacturer}" class="table table-bordered">
+						<td th:text="*{id}">
+						<td th:text="*{name}">
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="container">
+			<a href="/products" class="btn btn-primary">Takaisin</a>
+		</div>
+	</body>
+</html>
