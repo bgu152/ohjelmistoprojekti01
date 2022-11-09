@@ -21,13 +21,13 @@
     <form th:object="${product}" th:action="@{/save}" action="#" method="post">
     	<label for="id"></label><input type="hidden" id="id" th:field="*{id}" readonly="readonly" />
 		 
-        <label for="name">Anna vaatteen nimi: </label><input type="text" id="name" th:field="*{name}" />
+        <label for="name">Anna vaatteen nimi: </label><input type="text" id="name" th:field="*{name}" th:required="required"/>
 
 		<div style="clear: both; display: block; height: 10px;"></div>
-        <label for="type">Anna vaatteen tyyppi: </label><input type="text" id="type" th:field="*{type}" />
+        <label for="type">Anna vaatteen tyyppi: </label><input type="text" id="type" th:field="*{type}" th:required="required"/>
 
 		<div style="clear: both; display: block; height: 10px;"></div>
-        <label for="price">Anna vaatteen hinta: </label><input type="text" id="price" th:field="*{price}" th:required="required" />
+        <label for="price">Anna vaatteen hinta: </label><input type="number" id="price" th:field="*{price}" />
 
 		<div style="clear: both; display: block; height: 10px;"></div>
         <label for="manufacturer">Valitse valmistaja: </label>
@@ -38,6 +38,7 @@
 
 		<div style="clear: both; display: block; height: 10px;"></div>
         <input type="submit" value="Tallenna" />
+        <a href="/products">Takaisin</a>
     </form>
 </body>
 </html>
