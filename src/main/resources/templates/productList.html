@@ -39,23 +39,27 @@
                         </a></td>
                         <td>
                             <a
-                                th:href="@{/edit/{id}(id=${product.id})}" class="btn btn-warning"
+                                th:href="@{/edit/{id}(id=*{id})}" class="btn btn-warning"
                                 >Muokkaa</a
                             >
                         </td>
-                        <td>
-                            <a th:href="@{/delete/{id}(id=${product.id})}" class="btn btn-danger"
+                        <td> <!-- Different endpoint for different redirect after delete  -->
+                            <a th:href="${manufacturer} 
+                            ? @{/{manufacturer}/delete/{id}(manufacturer=*{manufacturer.name},id=*{id})}
+                            : @{/delete/{id}(id=*{id})}"
+                            	class="btn btn-danger"
                                 >Poista</a
                             >
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <h4 th:if="${products.isEmpty()}">Ei vaatteita</h4>
         </div>
 		<div class="container">
         	<a href="/add" class="btn btn-success">Lisää vaate</a>
-        	<a href="/addmanufacturer" class="btn btn-success">Lisää valmistaja</a>
         	<a href="/manufacturers" class="btn btn-info">Valmistajat</a>
+			<a th:if="${manufacturer}" href="/products" class="btn btn-primary">Takaisin kaikkiin vaatteisiin</a>
         </div>
     </body>
 </html>

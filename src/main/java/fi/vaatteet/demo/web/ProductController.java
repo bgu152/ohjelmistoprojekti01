@@ -3,8 +3,11 @@ package fi.vaatteet.demo.web;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,14 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fi.vaatteet.demo.domain.Manufacturer;
+import fi.vaatteet.demo.domain.ManufacturerRepo;
 import fi.vaatteet.demo.domain.Product;
 import fi.vaatteet.demo.domain.ProductRepo;
-
-import org.springframework.http.ResponseEntity;
-
-import fi.vaatteet.demo.domain.ManufacturerRepo;
-
-import fi.vaatteet.demo.domain.Manufacturer;
 
 @Controller
 public class ProductController {
@@ -53,10 +52,14 @@ public class ProductController {
 		return "productList";
 	}
 
-//  Delete in webpage
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String deleteProduct(@PathVariable("id") Long id, Model model) {
+//  Delete in web page. Return to the page the request was made from
+	@RequestMapping(value = {"/delete/{id}", "/{manufacturer}/delete/{id}"}, method = RequestMethod.GET)
+	public String deleteProduct(@PathVariable Long id,
+			@PathVariable(required = false) String manufacturer, Model model) {
 		productRepo.deleteById(id);
+		if (manufacturer != null) {
+			return "redirect:/products/{manufacturer}";
+		}
 		return "redirect:../products";
 	}
 

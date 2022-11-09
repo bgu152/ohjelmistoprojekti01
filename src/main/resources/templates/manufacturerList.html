@@ -21,6 +21,8 @@
 					<tr>
 						<th>ID</th>
 						<th>Nimi</th>
+						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				
@@ -28,12 +30,22 @@
 					<tr th:each="manufacturer: ${manufacturers}" th:object="${manufacturer}" class="table table-bordered">
 						<td th:text="*{id}">
 						<td th:text="*{name}">
+						<td>
+							<a th:href="@{/products/{manufacturer}(manufacturer=*{name})}" class="btn btn-info">
+							Vaatteet
+							</a>
+						</td>
+						<td>
+							<a th:href="@{deletemanufacturer/{id}(id=*{id})}" class="btn btn-danger">
+							Poista
+							</a>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		
 		<div class="container">
+		    <a href="/addmanufacturer" class="btn btn-success">Lisää valmistaja</a>
 			<a href="/products" class="btn btn-primary">Takaisin</a>
 		</div>
 	</body>
