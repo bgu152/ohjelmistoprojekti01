@@ -25,14 +25,14 @@ class ProductRepoTests {
 	@Test
 	public void FindClothesname() {
 		
-		Product product = productRepo.findById((long) 3).get();
+		Product product = productRepo.findById((long) 4).get();
 		assertEquals(product.getName(), "JoustavaMeno");
 	}
 	
 	@Test
 	public void FindClothesManufacturer() {
 		
-		Manufacturer manuF = productRepo.findById((long) 3).get().getManufacturer();
+		Manufacturer manuF = productRepo.findById((long) 4).get().getManufacturer();
 		//String produsct = productRepo.findById((long) 3).get().getName();
 		assertEquals(manuF.getName(), "M&M");
 	}
