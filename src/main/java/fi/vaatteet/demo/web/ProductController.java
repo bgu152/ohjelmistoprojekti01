@@ -78,7 +78,7 @@ public class ProductController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(Product product) {
 		try {
-			if (product.getPrice() < 0) {
+			if (product.getPrice() == null  || product.getPrice() < 0 ) {
 				System.out.println("Failed, price too small");
 				return "redirect:add";
 			} else {
@@ -87,6 +87,7 @@ public class ProductController {
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			System.out.println('2');
 			return "addProduct";
 		}
 		return "redirect:products";
