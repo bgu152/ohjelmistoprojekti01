@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valmistajan lisäys</title>
 </head>
+
 <body>
     <h1>Lisää valmistaja</h1>
     <form th:object="${manufacturer}" th:action="@{/savemanufacturer}" action="#" method="post">
-        <label for="name">Anna valmistajan nimi: </label><input type="text" id="name" th:field="*{name}" />
+        <label for="name">Anna valmistajan nimi: </label> 
+        
+        <input type="text" id="name" th:field="*{name}" class="btn btn-dark"/>
+        
 		<div style="clear: both; display: block; height: 10px;"></div>
-        <input type="submit" value="Tallenna" />
+		
+        <input type="submit" value="Tallenna" class="btn btn-primary"/>
+        
+        <a href="/manufacturers" class="btn btn-secondary">Takaisin</a>
     </form>
 </body>
 </html>
