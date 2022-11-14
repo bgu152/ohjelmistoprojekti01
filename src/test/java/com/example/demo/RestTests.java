@@ -1,15 +1,11 @@
 package com.example.demo;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Optional;
-
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +19,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import fi.vaatteet.demo.DemoApplication;
-import fi.vaatteet.demo.domain.Manufacturer;
-import fi.vaatteet.demo.domain.ManufacturerRepo;
-import fi.vaatteet.demo.domain.Product;
-import fi.vaatteet.demo.domain.ProductRepo;
 
 @RunWith(SpringRunner.class)
 //@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class, classes = { DemoApplication.class })
