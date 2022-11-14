@@ -25,38 +25,37 @@ import fi.vaatteet.demo.DemoApplication;
 @ContextConfiguration(classes = DemoApplication.class)
 @SpringBootTest
 class RestTests {
+	
+	String productURL = "http://localhost:8080/api/products/";
 
 	@Autowired
 	private WebApplicationContext webAppContext;
-	
+
 	private MockMvc mocksMvc;
-	
+
 	@BeforeEach
 	public void setup() {
 		mocksMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
-		
+
 	}
-	
+
 	@Test
 	public void apiStatusOk() throws Exception {
-		mocksMvc.perform(get("http://localhost:8080/api/products/")).andExpect(status().isOk());
+		mocksMvc.perform(get(productURL)).andExpect(status().isOk());
 	}
 
 	@Test
-	public void responseTypeApplicationJson () throws Exception {
-		mocksMvc.perform(get("http://localhost:8080/api/products/"))
-		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk());
+	public void responseTypeApplicationJson() throws Exception {
+		mocksMvc.perform(get(productURL))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
-	
-	  @Test
-	  void checkProductInfo () throws Exception {
-		long id = 4;
-		String url = "http://localhost:8080/api/products/4";
-		mocksMvc.perform(get(url))
-	        .andExpect(jsonPath("$.name").value("JoustavaMeno"))
-	        .andExpect(jsonPath("$.type").value("haalari"))
-	        .andDo(print());
-	  }
 
+	@Test
+	void checkProductInfo() throws Exception {
+		long id = 4;
+		mocksMvc.perform(get(productURL + id))
+		.andExpect(jsonPath("$.name").value("JoustavaMeno"))
+		.andExpect(jsonPath("$.type").value("haalari"))
+		.andDo(print());
+	}
 }
