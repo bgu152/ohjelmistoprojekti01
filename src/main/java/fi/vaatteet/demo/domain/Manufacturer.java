@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,7 +20,7 @@ public class Manufacturer {
     private String name;
     
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "manufacturer")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "manufacturer")
     private List<Product> products;
     
 	public Long getId() {
@@ -50,6 +51,11 @@ public class Manufacturer {
 	@Override
 	public String toString() {
 		return "Manufacturer [id=" + id + ", name=" + name + "]";
+	}
+	
+	@PreRemove
+	private void preRemove() {
+		products.forEach(product -> product.setManufacturer(null));
 	}
 	
 	
