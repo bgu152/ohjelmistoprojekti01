@@ -43,7 +43,7 @@ public class ProductController {
 		model.addAttribute("products", productRepo.findAll());
 		return "productList";
 	}
-	
+
 	// Show all products by chosen manufacturer
 	@RequestMapping(value = "/products/{manufacturer}", method = RequestMethod.GET)
 	public String getProductsByManufacturer(@PathVariable("manufacturer") String name, Model model) {
@@ -53,9 +53,9 @@ public class ProductController {
 	}
 
 //  Delete in web page. Return to the page the request was made from
-	@RequestMapping(value = {"/delete/{id}", "/{manufacturer}/delete/{id}"}, method = RequestMethod.GET)
-	public String deleteProduct(@PathVariable Long id,
-			@PathVariable(required = false) String manufacturer, Model model) {
+	@RequestMapping(value = { "/delete/{id}", "/{manufacturer}/delete/{id}" }, method = RequestMethod.GET)
+	public String deleteProduct(@PathVariable Long id, @PathVariable(required = false) String manufacturer,
+			Model model) {
 		productRepo.deleteById(id);
 		if (manufacturer != null) {
 			return "redirect:/products/{manufacturer}";
@@ -78,7 +78,7 @@ public class ProductController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(Product product) {
 		try {
-			if (product.getPrice() == null  || product.getPrice() < 0 ) {
+			if (product.getPrice() == null || product.getPrice() < 0) {
 				System.out.println("Failed, price too small");
 				return "redirect:add";
 			} else {
@@ -116,7 +116,6 @@ public class ProductController {
 		public String handleError() {
 			return "error";
 		}
-
 	}
 
 	// Restful services below
@@ -127,10 +126,7 @@ public class ProductController {
 			List<Product> productlist = (List<Product>) productRepo.findAll();
 			return ResponseEntity.ok().body(productlist);
 		} catch (Exception e) {
-
-			;
 			return ResponseEntity.status(500).build();
-
 		}
 	}
 
@@ -142,7 +138,6 @@ public class ProductController {
 		} catch (Exception e) {
 			return ResponseEntity.status(500).build();
 		}
-
 	}
 
 	@DeleteMapping("api/products/{id}")
@@ -156,17 +151,13 @@ public class ProductController {
 			return ResponseEntity.ok().body(product);
 		} catch (Exception e) {
 			return ResponseEntity.status(500).build();
-
 		}
-
 	}
 
 	@PutMapping("api/products/{id}")
 	public ResponseEntity<Product> updateProduct(@RequestBody Product productUpdated, @PathVariable Long id) {
-		
 
 		try {
-
 			Optional<Product> productFromDb = productRepo.findById(id);
 			if (productFromDb.isEmpty()) {
 				System.out.println(productUpdated);
@@ -174,13 +165,13 @@ public class ProductController {
 			}
 
 			Optional<Manufacturer> manufacturer = manufacturerRepo.findById((productUpdated.getManufacturer().getId()));
-			
+
 			if (manufacturer.isEmpty()) {
 				return ResponseEntity.status(400).build();
 			}
 
 			productUpdated.setId(id);
-			
+
 			return ResponseEntity.ok().body(productRepo.save(productUpdated));
 
 		} catch (Exception e) {
@@ -198,12 +189,9 @@ public class ProductController {
 			if (manufacturer.isEmpty()) {
 				return ResponseEntity.status(400).build();
 			}
-
 			return ResponseEntity.ok().body(productRepo.save(product));
 		} catch (Exception e) {
 			return ResponseEntity.status(500).build();
-
 		}
-
 	}
 }
