@@ -10,6 +10,8 @@ import fi.vaatteet.demo.domain.Manufacturer;
 import fi.vaatteet.demo.domain.ManufacturerRepo;
 import fi.vaatteet.demo.domain.Product;
 import fi.vaatteet.demo.domain.ProductRepo;
+import fi.vaatteet.demo.domain.User;
+import fi.vaatteet.demo.domain.UserRepo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +27,12 @@ private static final Logger log = LoggerFactory.getLogger(DemoApplication.class)
 	}
 	
 	@Bean
-		public CommandLineRunner productDemo(ProductRepo productRepo, ManufacturerRepo manufacturerRepo) {
+		public CommandLineRunner productDemo(ProductRepo productRepo, ManufacturerRepo manufacturerRepo, UserRepo userRepo) {
 			return (args) -> {
+				
+				log.info("Saving a user");
+				userRepo.save(new User("omppu", "$2a$12$NQpB3C8959BKZgJvqYxBf.MVzBELr34eTrw1l1bTFiOz.M6bmI2vW", "USER"));
+				userRepo.save(new User("rane", "$2a$12$IfwOH0AT/FFWYeXl3G.e1.AEcU63P5VLP.MHYQjnM.DF1Px6KUWwe", "USER"));
 
 				log.info("save a couple of manufacturers");
 				manufacturerRepo.save(new Manufacturer(" "));
