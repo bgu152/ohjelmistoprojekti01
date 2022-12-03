@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -94,6 +95,7 @@ public class ProductController {
 	}
 
 	// Update new product
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/edit/{id}")
 	public String updateProduct(@PathVariable("id") Long id, Model model,
 			@RequestParam(value = "title", required = false) String title) {
@@ -153,7 +155,8 @@ public class ProductController {
 			return ResponseEntity.status(500).build();
 		}
 	}
-
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@PutMapping("api/products/{id}")
 	public ResponseEntity<Product> updateProduct(@RequestBody Product productUpdated, @PathVariable Long id) {
 

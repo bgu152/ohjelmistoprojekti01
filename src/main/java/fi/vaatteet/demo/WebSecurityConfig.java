@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import fi.vaatteet.demo.web.UserDetailServiceImpl;
 
 @Configuration
 @EnableWebSecurity //enables Spring Security web security support
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig  {
 	  @Autowired
 	    private UserDetailServiceImpl userDetailsService;	
@@ -22,11 +24,19 @@ public class WebSecurityConfig  {
 		http
 			.csrf().disable() //Post metods did not work before this
 			.authorizeRequests()
-				.antMatchers("/", "/products", "/api/**").permitAll()
+				.antMatchers("/",
+						"/h2-console/**",
+						"/api/**",
+						"/css/**",
+						"/images/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
+				.csrf().ignoringAntMatchers("/h2-console/**")
+				.and()
+				.headers().frameOptions().sameOrigin()
+				.and()
 			.formLogin()
-				.defaultSuccessUrl("/", true)
+				.defaultSuccessUrl("/products", true)
 				.permitAll()
 				.and()
 			.logout()

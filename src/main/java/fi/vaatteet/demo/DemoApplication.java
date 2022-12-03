@@ -31,7 +31,7 @@ private static final Logger log = LoggerFactory.getLogger(DemoApplication.class)
 			return (args) -> {
 				
 				log.info("Saving a user");
-				userRepo.save(new User("omppu", "$2a$12$NQpB3C8959BKZgJvqYxBf.MVzBELr34eTrw1l1bTFiOz.M6bmI2vW", "USER"));
+				userRepo.save(new User("omppu", "$2a$12$NQpB3C8959BKZgJvqYxBf.MVzBELr34eTrw1l1bTFiOz.M6bmI2vW", "ADMIN"));
 				userRepo.save(new User("rane", "$2a$12$IfwOH0AT/FFWYeXl3G.e1.AEcU63P5VLP.MHYQjnM.DF1Px6KUWwe", "USER"));
 
 				log.info("save a couple of manufacturers");

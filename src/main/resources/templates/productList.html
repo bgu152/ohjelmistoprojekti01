@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -14,6 +14,9 @@
     </head>
     <body>
         <h1 th:text="${manufacturer} ? 'Vaatteet valmistajalta ' + ${manufacturer} : 'Vaatteet'"></h1>
+        <form th:action="@{/logout}" method="post">
+		    <input type="submit" value="Kirjaudu ulos">
+		</form>
         <div class="container shadow-4 rounded-5 overflow-hidden mb-0" >
             <table class="table table-stripped table-hover">
                 <thead class="thead-dark">
@@ -23,8 +26,8 @@
                         <th>Tyyppi</th>
                         <th>Hinta</th>
                         <th>Valmistaja</th>
-                        <th></th>
-                        <th></th>
+                        <th sec:authorize="hasAuthority('ADMIN')">
+                        <th sec:authorize="hasAuthority('ADMIN')">
                     </tr>
                 </thead>
                 <tbody>
@@ -37,13 +40,13 @@
                         	th:text="*{manufacturer?.name}"
                         	th:href="@{/products/{manufacturer}(manufacturer=*{manufacturer?.name})}">
                         </a></td>
-                        <td>
+                        <td sec:authorize="hasAuthority('ADMIN')">
                             <a
                                 th:href="@{/edit/{id}(id=*{id})}" class="btn btn-warning"
                                 >Muokkaa</a
                             >
                         </td>
-                        <td> <!-- Different endpoint for different redirect after delete  -->
+                        <td sec:authorize="hasAuthority('ADMIN')"> <!-- Different endpoint for different redirect after delete  -->
                             <a th:href="${manufacturer} 
                             ? @{/{manufacturer}/delete/{id}(manufacturer=*{manufacturer.name},id=*{id})}
                             : @{/delete/{id}(id=*{id})}"
