@@ -1,7 +1,12 @@
 package fi.vaatteet.demo.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import fi.vaatteet.demo.domain.User;
 import fi.vaatteet.demo.domain.UserRepo;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * This class is used by spring security to authenticate and authorize user
@@ -16,19 +22,46 @@ import fi.vaatteet.demo.domain.UserRepo;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
-	private final UserRepo userRepo;
-	
+
 	@Autowired
-	public UserDetailServiceImpl(UserRepo userRepo) {
-		this.userRepo = userRepo;
-	}
+
+	private UserRepo repository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User curruser = userRepo.findByUsername(username);
-        UserDetails user = new org.springframework.security.core.userdetails.User(username, curruser.getPasswordHash(), 
-        		AuthorityUtils.createAuthorityList(curruser.getRole()));
-        return user;
+
+	public UserDetails loadUserByUsername(String
+
+	username)
+
+			throws UsernameNotFoundException {
+
+		Optional<User> user = Optional.ofNullable(repository.findByUsername(username));
+
+		UserBuilder builder = null;
+
+		if (user.isPresent()) {
+
+			User currentUser = user.get();
+
+			builder = org.springframework.security.core.userdetails.User.withUsername(username);
+
+			builder.password(currentUser.getPasswordHash());
+
+			builder.roles("ADMIN");
+			System.out.println("ADMIN");
+//			Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//
+//			builder.authorities(authorities);
+
+		} else {
+
+			throw new UsernameNotFoundException("User not found.");
+
+		}
+
+		return builder.build();
+
 	}
 
 }
