@@ -68,7 +68,7 @@ public class SecurityConfigurations {
 	public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().disable() // Post metods did not work before this
+			http.cors().and().csrf().disable() // Post metods did not work before this
 					.authorizeRequests().antMatchers("/", "/h2-console/**", "/api/**", "/css/**", "/images/**")
 					.permitAll().anyRequest().authenticated().and().csrf().ignoringAntMatchers("/h2-console/**").and()
 					.headers().frameOptions().sameOrigin().and().formLogin().defaultSuccessUrl("/products", true)
