@@ -12,20 +12,22 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import fi.vaatteet.demo.domain.User;
 import fi.vaatteet.demo.domain.UserRepo;
 
 import fi.vaatteet.demo.AccountCredentials;
+
 @Controller
 public class UserController {
 	@Autowired
 	private UserRepo userRepo;
-	
 
 	@PostMapping("api/users")
 	public ResponseEntity<User> createUser(@RequestBody AccountCredentials creds) {
@@ -51,24 +53,57 @@ public class UserController {
 		}
 
 	}
-	
+
+	@PutMapping("api/users")
+	public ResponseEntity<User> updateUser(@RequestBody AccountCredentials creds) {
+		try {
+			User user = userRepo.findByUsername(creds.getUsername());
+			String pwd = creds.getPassword();
+			BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+			String hashPwd = bc.encode(pwd);
+			user.setPasswordHash(hashPwd);
+			user.setRole(creds.getRole());
+			user.setUsername(creds.getUsername());
+			userRepo.save(user);
+			return ResponseEntity.status(201).body(user);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(500).build();
+		}
+
+	}
+
+	@DeleteMapping("api/users/{username}")
+	public ResponseEntity<Object> deleteUser(@PathVariable String username) {
+
+		try {
+			User user = userRepo.findByUsername(username);
+			userRepo.deleteById(user.getId());
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.status(500).build();
+		}
+
+	}
+
 	@GetMapping("api/users")
-	public ResponseEntity<List<User>> getAllUsers(){
+	public ResponseEntity<List<User>> getAllUsers() {
 		try {
 			List<User> users = (List<User>) userRepo.findAll();
 			return ResponseEntity.ok().body(users);
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			return ResponseEntity.status(500).build();
 		}
 	}
-	
+
 	@GetMapping("api/users/{username}")
-	public ResponseEntity<User> getUser(Principal principal,  @PathVariable String username){
-		//org.springframework.security.core.userdetails.User luokan olio. Printataan kokeilun vuoksi. 
+	public ResponseEntity<User> getUser(Principal principal, @PathVariable String username) {
+		// org.springframework.security.core.userdetails.User luokan olio. Printataan
+		// kokeilun vuoksi.
 		System.out.println(principal.toString());
 		User user = userRepo.findByUsername(username);
-		
+
 		return ResponseEntity.status(200).body(user);
 	}
 }
