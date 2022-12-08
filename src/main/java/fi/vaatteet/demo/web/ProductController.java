@@ -46,10 +46,10 @@ public class ProductController {
 	}
 
 	// Show all products by chosen manufacturer
-	@RequestMapping(value = "/products/{manufacturer}", method = RequestMethod.GET)
-	public String getProductsByManufacturer(@PathVariable("manufacturer") String name, Model model) {
-		model.addAttribute("manufacturer", name);
-		model.addAttribute("products", manufacturerRepo.findByName(name).getProducts());
+	@RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
+	public String getProductsByManufacturer(@PathVariable("id") long id, Model model) {
+		model.addAttribute("manufacturer", manufacturerRepo.findById(id).getName());
+		model.addAttribute("products", manufacturerRepo.findById(id).getProducts());
 		return "productList";
 	}
 
