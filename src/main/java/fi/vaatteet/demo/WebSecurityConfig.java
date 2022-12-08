@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers(HttpMethod.GET,"/", "/h2-console/**", "/api/**", "/css/**", "/images/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/**").hasAuthority("ROLE_ADMIN")
+				.antMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN")
 //				.anyRequest().authenticated().and().csrf().ignoringAntMatchers("/h2-console/**").and().headers()
 //				.frameOptions().sameOrigin().and().formLogin().defaultSuccessUrl("/products", true).permitAll().and()
 //				.logout()
