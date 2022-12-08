@@ -60,12 +60,10 @@ public class UserController {
 	
 	@GetMapping("api/users/{username}")
 	public ResponseEntity<User> getUser(Principal principal,  @PathVariable String username){
+		//org.springframework.security.core.userdetails.User luokan olio. Printataan kokeilun vuoksi. 
 		System.out.println(principal.toString());
-		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		System.out.println(auth);
-		return null;
+		User user = userRepo.findByUsername(username);
+		
+		return ResponseEntity.status(200).body(user);
 	}
 }
