@@ -40,7 +40,7 @@ public class SecurityConfigurations {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 
-			http.csrf().disable() // Post metods did not work before this
+			http.cors().and().csrf().disable() // Post metods did not work before this
 					.requestMatchers(matchers -> matchers.antMatchers("/api/**", "/auth/**") // apply JWTSecurityConfig to requests
 																					// matching "/api/**"
 					).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
