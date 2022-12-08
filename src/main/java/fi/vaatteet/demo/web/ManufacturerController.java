@@ -60,6 +60,7 @@ public class ManufacturerController {
 	}
 	
 	// Add new manufacturer
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/addmanufacturer")
 	public String addManufacturer(Model model) {
 		model.addAttribute("manufacturer", new Manufacturer());

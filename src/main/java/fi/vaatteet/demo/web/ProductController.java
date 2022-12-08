@@ -54,6 +54,7 @@ public class ProductController {
 	}
 
 //  Delete in web page. Return to the page the request was made from
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/delete/{id}", "/{manufacturer}/delete/{id}" }, method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable Long id, @PathVariable(required = false) String manufacturer,
 			Model model) {
@@ -65,6 +66,7 @@ public class ProductController {
 	}
 
 	// Add new product
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/add")
 	public String addProduct(Model model) {
 		String title2 = "Lisää vaate";
