@@ -44,11 +44,19 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         System.out.println("BACKEND: UserDetails loadUserByUsername " + username);
 
-        fi.vaatteet.demo.domain.User user = repository.findByUsername(username);       
+        fi.vaatteet.demo.domain.User userFromDB = repository.findByUsername(username);       
 
-        System.out.println("BACKEND: UserDetails loadUserByUsername " + username);       
+        System.out.println("BACKEND: UserDetails loadUserByUsername " + username);  
+        
+        System.out.println(userFromDB.toString());
+        
+        
 
-        return new User(user.getUsername(), user.getPasswordHash(), AuthorityUtils.createAuthorityList(user.getRole()));
+        User user = new User(userFromDB.getUsername(), userFromDB.getPasswordHash(), AuthorityUtils.createAuthorityList(userFromDB.getRole()));
+        
+        System.out.println(user.toString());
+        
+        return user;
 
 }
 

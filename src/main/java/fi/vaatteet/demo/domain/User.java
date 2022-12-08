@@ -76,4 +76,14 @@ public class User {
 		this.role = role;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", passwordHash=" + passwordHash + ", role=" + role
+				+ ", getId()=" + getId() + ", getUsername()=" + getUsername() + ", getPasswordHash()="
+				+ getPasswordHash() + ", getRole()=" + getRole() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+	
+
 }
