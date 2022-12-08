@@ -15,6 +15,7 @@
 <body>
     <h1>Lisää valmistaja</h1>
     <form th:object="${manufacturer}" th:action="@{/savemanufacturer}" action="#" method="post">
+        <label for="id"></label><input type="hidden" id="id" th:field="*{id}" readonly="readonly" />
         <label for="name">Anna valmistajan nimi: </label> 
         
         <input type="text" id="name" th:field="*{name}" class="btn btn-dark"/>

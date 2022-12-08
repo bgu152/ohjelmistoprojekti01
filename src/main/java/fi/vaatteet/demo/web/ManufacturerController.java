@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.vaatteet.demo.domain.Manufacturer;
 import fi.vaatteet.demo.domain.ManufacturerRepo;
+import fi.vaatteet.demo.domain.Product;
 
 @CrossOrigin
 @Controller
@@ -39,6 +42,21 @@ public class ManufacturerController {
 	public String deleteManufacturer(@PathVariable("id") Long id, Model model) {
 		manufacturerRepo.deleteById(id);
 		return "redirect:../manufacturers";
+	}
+	
+	// Update new product
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value = "/editmanufacturer/{id}")
+	public String updateManufacturer(@PathVariable("id") Long id, Model model,
+			@RequestParam(value = "title", required = false) String title) {
+		Optional<Manufacturer> manuf = manufacturerRepo.findById(id);
+		if (manuf.isEmpty()) {
+			return "redirect:../manufacturers";
+		}
+		String title1 = "Muokkaa vaatetta";
+		model.addAttribute("manufacturer", manuf);
+		model.addAttribute("title", title1);
+		return "addManufacturer";
 	}
 	
 	// Add new manufacturer

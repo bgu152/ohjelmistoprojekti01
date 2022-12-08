@@ -23,6 +23,7 @@
 						<th>Nimi</th>
 						<th></th>
 						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				
@@ -36,7 +37,11 @@
 							</a>
 						</td>
 						<td>
-							<a th:href="@{deletemanufacturer/{id}(id=*{id})}" class="btn btn-danger">
+							<a th:href="@{editmanufacturer/{id}(id=*{id})}" class="btn btn-danger" sec:authorize="hasAuthority('ADMIN')">
+							Muokkaa valmistajaa
+							</a>						
+						<td>
+							<a th:href="@{deletemanufacturer/{id}(id=*{id})}" class="btn btn-danger" sec:authorize="hasAuthority('ADMIN')">
 							Poista
 							</a>
 					</tr>
@@ -45,7 +50,7 @@
 		</div>
 		
 		<div class="container">
-		    <a href="/addmanufacturer" class="btn btn-success">Lisää valmistaja</a>
+		    <a href="/addmanufacturer" class="btn btn-success" sec:authorize="hasAuthority('ADMIN')">Lisää valmistaja</a>
 			<a href="/products" class="btn btn-primary">Takaisin</a>
 		</div>
 	</body>
