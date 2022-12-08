@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import fi.vaatteet.demo.domain.User;
 import fi.vaatteet.demo.domain.UserRepo;
 
+import fi.vaatteet.demo.AccountCredentials;
 @Controller
 public class UserController {
 	@Autowired
@@ -27,14 +28,18 @@ public class UserController {
 	
 
 	@PostMapping("api/users")
-	public ResponseEntity<User> createUser(@RequestBody User user) {
+	public ResponseEntity<User> createUser(@RequestBody AccountCredentials creds) {
+		System.out.println(creds.toString());
 
 		try {
-			String pwd = user.getPasswordHash();
+			User user = new User();
+			String pwd = creds.getPassword();
 			BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
 			String hashPwd = bc.encode(pwd);
 			user.setPasswordHash(hashPwd);
-			if (userRepo.findByUsername(user.getUsername()) != null) {
+			user.setRole(creds.getRole());
+			user.setUsername(creds.getUsername());
+			if (userRepo.findByUsername(creds.getUsername()) != null) {
 				return ResponseEntity.status(409).build();
 			} else {
 				userRepo.save(user);
