@@ -46,7 +46,12 @@ public class SecurityConfigurations {
 					).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 					.authorizeRequests().antMatchers(HttpMethod.GET, "/api/**").permitAll()
 					.antMatchers(HttpMethod.POST, "/auth/**").permitAll().antMatchers(HttpMethod.POST, "/api/**")
-					.hasAuthority("ADMIN").and()
+					.hasAuthority("ADMIN").
+					antMatchers(HttpMethod.DELETE, "/api/**")
+					.hasAuthority("ADMIN").
+					antMatchers(HttpMethod.PUT, "/api/**")
+					.hasAuthority("ADMIN").
+					and()
 					.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		}
 
